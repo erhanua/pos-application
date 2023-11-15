@@ -9,6 +9,7 @@ import {
   UserOutlined,
   BarChartOutlined,
   LogoutOutlined,
+  StockOutlined,
 } from "@ant-design/icons";
 
 const Header = () => {
@@ -66,6 +67,13 @@ const Header = () => {
           >
             <BarChartOutlined className="md:text-2xl text-xl" />
             <span className="md:text-xs text-[10px]">Statistics</span>
+          </Link>
+          <Link
+            to={"/stock"}
+            className="menu-link flex flex-col items-center hover:text-[#40a9ff] transition-all "
+          >
+            <StockOutlined className="md:text-2xl text-xl" />
+            <span className="md:text-xs text-[10px]">Stock</span>
           </Link>
           <Link
             to={"/"}
