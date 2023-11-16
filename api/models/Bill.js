@@ -13,5 +13,5 @@ const BillSchema = mongoose.Schema(
   { timestamps: true } /* To find out when it was added*/
 );
 
-const Bill = mongoose.model("categories", BillSchema);
+const Bill = mongoose.model("bills", BillSchema);
 module.exports = Bill;
