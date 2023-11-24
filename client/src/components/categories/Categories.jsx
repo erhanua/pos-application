@@ -1,79 +1,48 @@
-import { PlusOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { Button, Form, Input, message, Modal } from "antd";
+import { PlusOutlined, EditOutlined } from "@ant-design/icons";
+import Add from "./Add";
+import Edit from "./Edit";
 import "./style.css";
 
+// Categories Component
 const Categories = ({ categories, setCategories }) => {
+  // State for managing the visibility of the Add and Edit modals
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [form] = Form.useForm();
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const onFinish = (values) => {
-    try {
-      //The fetch(axios) function is used to send HTTP requests.
-      fetch("http://localhost:5000/api/categories/add-category", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: { "Content-type": "application/json; charset=UTF-8" },
-      });
-
-      //Forwarding messages and clearing input
-      message.success("Category added successfully.");
-      form.resetFields();
-      setCategories([...categories, values]); //see instantly on the page
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
+  // Return statement
   return (
+    // Unordered list to display categories and action buttons
     <ul className="flex gap-4 md:flex-col text-lg">
-      {/* <li className="category-item">
-        <span>All Products</span>
-      </li>
-      <li className="category-item">
-        <span>Food</span>
-      </li>
-      <li className="category-item">
-        <span>Beverage</span>
-      </li>
-      <li className="category-item">
-        <span>All Products</span>
-      </li> */}
       {categories.map((item) => (
         <li className="category-item" key={item._id}>
           <span>{item.title}</span>
         </li>
       ))}
-
       <li
-        className="category-item  !bg-fuchsia-700 hover:opacity-90"
-        onClick={() => setIsAddModalOpen(true)} //Open a modal when clicked
+        className="category-item bg-purple-800 hover:opacity-90"
+        onClick={() => setIsAddModalOpen(true)}
       >
         <PlusOutlined className="md:text-2xl" />
       </li>
-      <Modal
-        title="Add New Category"
-        open={isAddModalOpen}
-        onCancel={() => setIsAddModalOpen(false)} // Close the modal
-        footer={false} //Delete the bottom part of the modal
+      <li
+        className="category-item bg-orange-800 hover:opacity-90"
+        onClick={() => setIsEditModalOpen(true)}
       >
-        <Form layout="vertical" onFinish={onFinish} form={form}>
-          <Form.Item
-            name="title"
-            label="Add Category"
-            rules={[
-              { required: true, message: "Category Field Cannot Be Empty!" },
-            ]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item className="flex justify-end mb-0">
-            <Button type="primary" htmlType="submit">
-              Create
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
+        <EditOutlined className="md:text-2xl" />
+      </li>
+      <Add
+        isAddModalOpen={isAddModalOpen}
+        setIsAddModalOpen={setIsAddModalOpen}
+        categories={categories}
+        setCategories={setCategories}
+      />
+      <Edit
+        isEditModalOpen={isEditModalOpen}
+        setIsEditModalOpen={setIsEditModalOpen}
+        categories={categories}
+        setCategories={setCategories}
+      />
     </ul>
   );
 };
